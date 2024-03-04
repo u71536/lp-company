@@ -35,12 +35,13 @@ departments = [
             {"first_name": "Kevin", "last_name": "Jimenez", "position": "Middle HR", "salary_rub": 70000},
             {"first_name": "Nicole", "last_name": "Riley", "position": "HRD", "salary_rub": 120000},
         ]
+
     },
     {
         "title": "IT department",
         "employers": [
             {"first_name": "Christina", "last_name": "Walker", "position": "Python dev", "salary_rub": 80000},
-            {"first_name": "Michelle", "last_name": "Gilbert", "position": "JS dev", "salary_rub": 85000},
+            {"first_name": "Michelle12", "last_name": "Gilbert", "position": "JS dev", "salary_rub": 85000},
             {"first_name": "Caitlin", "last_name": "Bradley", "position": "Teamlead", "salary_rub": 950000},
             {"first_name": "Brian", "last_name": "Hartman", "position": "CTO", "salary_rub": 130000},
         ]
@@ -52,3 +53,36 @@ taxes = [
     {"department": "IT Department", "name": "hiring", "value_percents": 6},
     {"department": "BizDev Department", "name": "sales", "value_percents": 20},
 ]
+print('Названия отделов')
+for department in departments:
+    print(department['title'])
+
+print('\nИмена сотрудников ')
+for i in departments:
+    for k in i['employers']:
+        print(k['first_name'])
+
+print('\nИмена сотрудников с названием отдела')
+for i in departments:
+    for k in i['employers']:
+        print(f"{k['first_name']} работает в {i['title']}")
+
+print('\nИмена сотрудников с названием отдела >100К')
+for i in departments:
+    for k in i['employers']:
+        if k['salary_rub'] >= 100000:
+            print(f"{k['first_name']} работает в {i['title']}")
+
+print('\nВывести позиции с зп <80К')
+for i in departments:
+    for k in i['employers']:
+        if k['salary_rub'] <= 80000:
+            print(f"{k['position']}")
+
+print('\nВывести траты на каждый отдел')
+d = []
+for i in departments:
+    for k in i['employers']:
+        d.append(k['salary_rub'])
+    print(f'{i["title"]} тратит {sum(d)}')
+
