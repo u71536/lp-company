@@ -41,7 +41,7 @@ departments = [
         "title": "IT department",
         "employers": [
             {"first_name": "Christina", "last_name": "Walker", "position": "Python dev", "salary_rub": 80000},
-            {"first_name": "Michelle12", "last_name": "Gilbert", "position": "JS dev", "salary_rub": 85000},
+            {"first_name": "Michelle", "last_name": "Gilbert", "position": "JS dev", "salary_rub": 85000},
             {"first_name": "Caitlin", "last_name": "Bradley", "position": "Teamlead", "salary_rub": 950000},
             {"first_name": "Brian", "last_name": "Hartman", "position": "CTO", "salary_rub": 130000},
         ]
@@ -86,3 +86,62 @@ for i in departments:
         d.append(k['salary_rub'])
     print(f'{i["title"]} тратит {sum(d)}')
 
+"""
+12. Вывести без повторений имена людей, чьи фамилии заканчиваются на гласную букву.
+"""
+print('\nВывести отдел и минимальную зарплату')
+d = []
+for i in departments:
+    for k in i['employers']:
+        d.append(k['salary_rub'])
+    print(f'В {i["title"]} наименьшая зарплата {min(d)}')
+    d.clear()
+
+print('\nВывести отдел и минимальную, средную и максимальную зарплаты')
+d = []
+for i in departments:
+    for k in i['employers']:
+        d.append(k['salary_rub'])
+    avg_salary = sum(d) / len(d)
+    print(f'В {i["title"]} наименьшая зарплата {min(d)}, средняя {int(avg_salary)}, наибольшая зарплата {max(d)}')
+    d.clear()
+
+print('\nВывести средную зарплату в компании')
+d = []
+for i in departments:
+    for k in i['employers']:
+        d.append(k['salary_rub'])
+    avg_salary = sum(d) / len(d)
+print(f'Средняя зарплата в компании: {int(avg_salary)}')
+
+print('\nВывести позиции с зп >90К без повторений')
+for i in departments:
+    for k in i['employers']:
+        if k['salary_rub'] > 90000:
+            print(f"{k['position']}")
+
+print('\nВывести среднюю зарплату по каждому отделу среди девушек')
+girls_names = ["Michelle", "Nicole", "Christina", "Caitlin"]
+d = []
+for i in departments:
+    for k in i['employers']:
+        if k['first_name'] in girls_names:
+            d.append(k['salary_rub'])
+        else:
+            continue
+    avg_salary = sum(d) / len(d)
+    print(f"Средняя зарплата в компании по отделам среди девушек. {i['title']} {int(avg_salary)}")
+    d.clear()
+
+print('\nВывести без повторений имена людей, чьи фамилии заканчиваются на гласную букву')
+letters = ["a", "e", "u", "i", 'o']
+d = []
+for i in departments:
+    for k in i['employers']:
+        if k['first_name'] in girls_names:
+            d.append(k['salary_rub'])
+        else:
+            continue
+    avg_salary = sum(d) / len(d)
+    print(f"Средняя зарплата в компании по отделам среди девушек. {i['title']} {int(avg_salary)}")
+    d.clear()
