@@ -25,7 +25,6 @@
 16. Вывести всех сотрудников, за которых компания платит больше 100к налогов в год.
 17. Вывести имя и фамилию сотрудника, за которого компания платит меньше всего налогов.
 """
-
 departments = [
     {
         "title": "HR department",
@@ -53,6 +52,7 @@ taxes = [
     {"department": "IT Department", "name": "hiring", "value_percents": 6},
     {"department": "BizDev Department", "name": "sales", "value_percents": 20},
 ]
+
 print('Названия отделов')
 for department in departments:
     print(department['title'])
@@ -142,14 +142,112 @@ for i in departments:
             continue
 
 
-"""Третий уровень:
-Теперь вам пригодится ещё список taxes, в котором хранится информация о налогах на сотрудников из разных департаметов.
-Если department None, значит, этот налог применяется ко всем сотрудникам компании.
-Иначе он применяется только к сотрудникам департмента, название которого совпадает с тем, что записано по ключу department.
-К одному сотруднику может применяться несколько налогов.
-13. Вывести список отделов со средним налогом на сотрудников этого отдела.
-14. Вывести список всех сотредников с указанием зарплаты "на руки" и зарплаты с учётом налогов.
-15. Вывести список отделов, отсортированный по месячной налоговой нагрузки.
-16. Вывести всех сотрудников, за которых компания платит больше 100к налогов в год.
-17. Вывести имя и фамилию сотрудника, за которого компания платит меньше всего налогов.
-"""
+
+
+
+print('\nВывести список отделов со средним налогом на сотрудников этого отдела')
+taxes_departament = []
+for tax_departament in taxes:
+    if tax_departament['department'] != None:
+        taxes_departament.append(tax_departament['department'].lower())
+        if tax_departament['department'].lower() in taxes_departament:
+            sum_tax = tax_departament['value_percents'] + taxes[0]['value_percents']
+            print(f"{tax_departament['department']}: {sum_tax / 2}%")
+    else:
+        taxes_departament.append(tax_departament['department'])
+
+print('\nВывести список всех сотрудников с указанием зарплаты "на руки" и зарплаты с учётом налогов')
+taxes_departament_names = []
+taxes_departaments = {}
+for tax_departament in taxes:
+    if tax_departament['department'] != None:
+        taxes_departament_names.append(tax_departament['department'].lower())
+        if tax_departament['department'].lower() in taxes_departament_names:
+            sum_tax = tax_departament['value_percents'] + taxes[0]['value_percents']
+            taxes_departaments[tax_departament['department'].lower()] = sum_tax
+    else:
+        taxes_departament_names.append(tax_departament['department'])
+
+for i1 in departments:
+    for k1 in i1['employers']:
+        if i1['title'].lower() in taxes_departament_names:
+            if i1['title'].lower() in taxes_departaments:
+                print(f"{k1['first_name']} получает {int(k1['salary_rub'] - k1['salary_rub'] * ((taxes_departaments[i1['title'].lower()] / 100)))} на руки")
+
+
+print('\nВывести список отделов, отсортированный по месячной налоговой нагрузки')
+taxes_departament_names = []
+taxes_departaments = {}
+tax_burden = []
+for tax_departament in taxes:
+    if tax_departament['department'] != None:
+        taxes_departament_names.append(tax_departament['department'].lower())
+        if tax_departament['department'].lower() in taxes_departament_names:
+            sum_tax = tax_departament['value_percents'] + taxes[0]['value_percents']
+            taxes_departaments[tax_departament['department'].lower()] = sum_tax
+    else:
+        taxes_departament_names.append(tax_departament['department'])
+
+for i1 in departments:
+    for k1 in i1['employers']:
+        if i1['title'].lower() in taxes_departament_names:
+            if i1['title'].lower() in taxes_departaments:
+                taxes_for_one_person = int(k1['salary_rub'] * ((taxes_departaments[i1['title'].lower()] / 100)))
+                tax_burden.append(taxes_for_one_person)
+print(f"У {i1['title']} налоговая нагрузка {sum(tax_burden)}")
+
+print('\nВывести всех сотрудников, за которых компания платит больше 100к налогов в год')
+taxes_departament_names = []
+taxes_departaments = {}
+for tax_departament in taxes:
+    if tax_departament['department'] != None:
+        taxes_departament_names.append(tax_departament['department'].lower())
+        if tax_departament['department'].lower() in taxes_departament_names:
+            sum_tax = tax_departament['value_percents'] + taxes[0]['value_percents']
+            taxes_departaments[tax_departament['department'].lower()] = sum_tax
+    else:
+        taxes_departament_names.append(tax_departament['department'])
+
+for i1 in departments:
+    for k1 in i1['employers']:
+        if i1['title'].lower() in taxes_departament_names:
+            if i1['title'].lower() in taxes_departaments:
+                if int(k1['salary_rub'] * ((taxes_departaments[i1['title'].lower()] / 100))) > 100000:
+                    print(f"Компания платит за {k1['first_name']} больше >100K налогов")
+                else:
+                    continue
+
+print('\nВывести имя и фамилию сотрудника, за которого компания платит меньше всего налогов')
+taxes_departament_names = []
+taxes_departaments = {}
+tax_burden = {}
+n = 0
+for tax_departament in taxes:
+    if tax_departament['department'] != None:
+        taxes_departament_names.append(tax_departament['department'].lower())
+        if tax_departament['department'].lower() in taxes_departament_names:
+            sum_tax = tax_departament['value_percents'] + taxes[0]['value_percents']
+            taxes_departaments[tax_departament['department'].lower()] = sum_tax
+    else:
+        taxes_departament_names.append(tax_departament['department'])
+
+for i1 in departments:
+    for k1 in i1['employers']:
+        if i1['title'].lower() in taxes_departament_names:
+            if i1['title'].lower() in taxes_departaments:
+                tax_burden[i1['employers'][n]["first_name"]] = (k1['salary_rub'] * (taxes_departaments[i1['title'].lower()] / 100))
+                n += 1
+            else:
+                continue
+
+minimal_tax = min(tax_burden.values())
+
+for key in tax_burden:
+    if tax_burden[key] == minimal_tax:
+        for i in departments:
+            for k in i['employers']:
+                if key == k['first_name']:
+                    print(f"{key} {k['last_name']}")
+    else:
+        break
+
